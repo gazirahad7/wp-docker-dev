@@ -1,4 +1,5 @@
 # Docker & WordPress
+plugins/              # WordPress plugins (if not in version control)
 wp-data/              # WordPress core (auto-generated)
 db_data/              # MySQL volume
 .env                  # environment file (secrets)
