@@ -124,6 +124,40 @@ cd plugins
 git clone https://github.com/yourusername/my-plugin.git
 ```
 
+**Option 3: Add Plugin as Git Submodule**
+
+```bash
+git submodule add https://github.com/yourusername/my-plugin.git plugins/my-plugin
+```
+
+Update submodules after cloning the repository:
+
+```bash
+git submodule update --init --recursive
+```
+
+To pull latest changes from all submodules:
+
+```bash
+git submodule foreach git pull origin main
+```
+
+To update a specific submodule:
+
+```bash
+cd plugins/my-plugin
+git pull origin main
+cd ../..
+```
+
+To remove a submodule:
+
+```bash
+git submodule deinit -f plugins/my-plugin
+rm -rf .git/modules/plugins/my-plugin
+git rm -f plugins/my-plugin
+```
+
 ### Plugin Structure Example
 
 ```
@@ -194,6 +228,50 @@ docker compose run --rm wpcli rewrite flush
 
 ```bash
 docker compose run --rm wpcli core update
+```
+
+### User Management Examples
+
+**Create Admin User with Custom Password:**
+
+```bash
+docker compose run --rm wpcli user create adminuser admin@yourdomain.com --role=administrator --user_pass=SecurePassword123!
+```
+
+**Create Editor User:**
+
+```bash
+docker compose run --rm wpcli user create editoruser editor@yourdomain.com --role=editor --user_pass=EditorPass456!
+```
+
+**Create Author User:**
+
+```bash
+docker compose run --rm wpcli user create authoruser author@yourdomain.com --role=author --user_pass=AuthorPass789!
+```
+
+**List all users:**
+
+```bash
+docker compose run --rm wpcli user list
+```
+
+**Update user password:**
+
+```bash
+docker compose run --rm wpcli user update adminuser --prompt=user_pass
+```
+
+**Delete a user:**
+
+```bash
+docker compose run --rm wpcli user delete username
+```
+
+**Change user role:**
+
+```bash
+docker compose run --rm wpcli user set-role username administrator
 ```
 
 ## 🐳 Docker Management
