@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: wp_db
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wp_app
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+    volumes:
+      - ./wp-data:/var/www/html
+      - ./plugins:/var/www/html/wp-content/plugins
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: wp_phpmyadmin
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      PMA_ARBITRARY: 1
+      PMA_AUTH_TYPE: config
+
+  wpcli:
+    image: wordpress:cli
+    container_name: wp_cli
+    depends_on:
+      - db
+      - wordpress
+    env_file:
+      - .env
+    volumes:
+      - ./wp-data:/var/www/html
+      - ./plugins:/var/www/html/wp-content/plugins
+    entrypoint: ["wp", "--allow-root"]
+
+volumes:
+  db_data:

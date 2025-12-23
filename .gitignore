@@ -1,0 +1,21 @@
+# Docker & WordPress
+wp-data/              # WordPress core (auto-generated)
+db_data/              # MySQL volume
+.env                  # environment file (secrets)
+
+# Node / Composer (if you add builds later)
+node_modules/
+vendor/
+
+# Logs
+*.log
+*.cache
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Git submodules (if plugin cloned)
+plugins/**/.git
