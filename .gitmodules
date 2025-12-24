@@ -1,0 +1,6 @@
+[submodule "plugins/plugins/basic-plugin"]
+	path = plugins/plugins/basic-plugin
+	url = https://github.com/gazirahad7/basic-plugin.git
+[submodule "plugins/basic-plugin"]
+	path = plugins/basic-plugin
+	url = https://github.com/gazirahad7/basic-plugin.git
