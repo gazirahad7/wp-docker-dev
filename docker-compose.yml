@@ -6,8 +6,11 @@ services:
     container_name: wp_db
     restart: always
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    env_file:
-      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
 
@@ -29,6 +32,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
+    platform: linux/amd64
     container_name: wp_phpmyadmin
     depends_on:
       - db
